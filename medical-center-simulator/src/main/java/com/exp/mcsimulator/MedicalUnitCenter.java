@@ -21,16 +21,17 @@ public class MedicalUnitCenter {
 	private static int MAXPATIENTS = 150;
 	private static int MAXMESSAGES = 100;
 	private static int MAXDISTANCE = 50; //Km
-	static Logger log ;
-
+	
 	static {
 	      System.setProperty("java.util.logging.config.file",
 	              "src/main/resources/loggin-bas.properties");
 	      //must initialize loggers after setting above property
-	      log = Logger.getLogger(MedicalUnitCenter.class.getName());
+	   
 	  }
 	
+	Logger  log = Logger.getLogger(MedicalUnitCenter.class.getName());
 
+	
 	public MedicalUnitCenter() {
 		medicalUnits = new LinkedList<MedicalUnit>();
 		configured = new LinkedList<Boolean>();
@@ -130,7 +131,7 @@ public static void main(String[]args) {
 	
 	MedicalUnit medicalUnit1 = new MedicalUnit("C-XX-ALFA"); 
 	
-	MedicalUnit medicalUnit2 = new MedicalUnit("C-XX-BETA"); 
+//	MedicalUnit medicalUnit2 = new MedicalUnit("C-XX-BETA"); 
 	
 	
 	MedicalUnitCenter muLauncher = new MedicalUnitCenter();
@@ -139,9 +140,9 @@ public static void main(String[]args) {
 	
 	try {
 		muLauncher.addMedicalUnit(medicalUnit1);
-		muLauncher.addMedicalUnit(medicalUnit2);
+		//muLauncher.addMedicalUnit(medicalUnit2);
 		muLauncher.configureAll();
-		tg =	muLauncher.launchAll("NUMOfMEDUNITS:2");
+		tg =	muLauncher.launchAll("NUMOfMEDUNITS:1");
 	
 	
 	}catch(Exception ex) {

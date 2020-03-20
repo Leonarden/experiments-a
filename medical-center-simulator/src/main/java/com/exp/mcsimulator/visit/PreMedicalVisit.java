@@ -16,6 +16,13 @@ public abstract class PreMedicalVisit {
 	private List<Patient> patients = new LinkedList<Patient>();
 	private List<Message> messages;
 	private MedicalUnitStatus medicalUnitStatus;
+	static {
+	      System.setProperty("java.util.logging.config.file",
+	              "src/main/resources/loggin-bas.properties");
+	      //must initialize loggers after setting above property
+	   
+	  }
+	
 	Logger log = Logger.getLogger(this.getClass().getName());
 
 	

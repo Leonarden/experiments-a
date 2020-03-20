@@ -13,6 +13,13 @@ import com.exp.mcsimulator.util.MedicalUnitStatus;
 
 public abstract class MedicalVisit {
 
+	static {
+	      System.setProperty("java.util.logging.config.file",
+	              "src/main/resources/loggin-bas.properties");
+	      //must initialize loggers after setting above property
+	   
+	  }
+	
 	private Patient patient;
 	Logger log = Logger.getLogger(this.getClass().getName());
 	private MedicalUnitStatus medicalUnitStatus;

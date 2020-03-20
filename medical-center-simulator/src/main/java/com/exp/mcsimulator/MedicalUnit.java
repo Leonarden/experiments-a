@@ -32,7 +32,15 @@ Map<String,Treatment> treatments;
 private static int MAXPATIENTS = 150;
 private static int MAXMESSAGES = 100;
 private static int MAXDISTANCE = 50; //miles
-Logger log = Logger.getLogger(this.getClass().getName());
+ 
+static {
+    	System.setProperty("java.util.logging.config.file",
+            "src/main/resources/loggin-bas.properties");
+    //must initialize loggers after setting above property
+
+}
+Logger log = Logger.getLogger(MedicalUnit.class.getName()); 
+ 
 
 public MedicalUnit(String id) {
 

@@ -9,6 +9,13 @@ import com.exp.mcsimulator.Patient;
 import com.exp.mcsimulator.util.MedicalUnitStatus;
 
 public abstract class PostMedicalVisit {
+	static {
+	      System.setProperty("java.util.logging.config.file",
+	              "src/main/resources/loggin-bas.properties");
+	      //must initialize loggers after setting above property
+	   
+	  }
+	
 	Logger log = Logger.getLogger(this.getClass().getName());
 	List<Patient> patients = new LinkedList<Patient>();
 	MedicalUnitStatus medicalUnitStatus;
