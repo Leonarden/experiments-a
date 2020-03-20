@@ -27,7 +27,7 @@ public abstract class PreMedicalVisit {
 	Logger log = Logger.getLogger(this.getClass().getName());
 
 	
-	/* next should be better stored in Properties file */
+	/* 0:max priority keywords, 1:less priority keywords... */
 	String[][] emergencyKWords = {{"can't breath","bleeding","emergency","poisoned"},
 									{"can't move","fever","vomit","can't think clear"},
 									{"flu","nausea","stomach","can stand up"}
@@ -129,7 +129,7 @@ public abstract class PreMedicalVisit {
 				}		
 			}	
 			if(m.getPriority()<0) {
-				m.setPriority(emergencyKWords.length); //it is lastpriority +1
+				m.setPriority(emergencyKWords.length); //if no priority has been assigned then  lastpriority +1
 				
 			}
 			log.log(Level.INFO," Message " + m.getContent()+ ",Priority: " + m.getPriority());
@@ -138,29 +138,53 @@ public abstract class PreMedicalVisit {
 
 	/**
 	 * This method will search patients from repository (in this case a list), it will use message.patientId
-	 * It will also add the message to the messages list inside patient 
+	 * It will also add the message to the messages list inside patient object 
+	 * It generates the matching message-patient list
 	 */
 	public abstract void searchPatientsRecords();
-	
-	
+	/**
+	 * Sorts patient list in 2 ways first by priority second by shortest distance
+	 */
 	public void scheduleVisit() {
 
 		List<Patient> sortedA = new LinkedList<Patient>();
 		Collections.sort(patients,comparByPriority);
 		Patient p1 = patients.get(0);
 		Patient p2;
+		boolean samepriority = false;
 		List<Patient> sublist = new LinkedList<Patient>();
-		sublist.add(p1);
+		
+		if(patients.size()>1)
+			sublist.add(p1);
+		else
+			sortedA.add(p1);
+		
 		for(int i=1;i<patients.size();i++) {
 			p2 = patients.get(i);
 			if(comparByPriority.compare(p1, p2)==0) {
 				sublist.add(p2);
+				samepriority = true;
 			}else {
-		        Collections.sort(sublist,comparByDistance);
-		        sortedA.addAll(sublist);
-				sublist = new LinkedList<Patient>();
-			}
+				//sublist was recreated : elements in 
+				//patients.list are sorted by priority: here is the case 0-0-0-*1-2*
+				if(sublist.size()==0)
+					sublist.add(p1);
+				
+			   // we reach the last element in the case  000111333 *45*
+				if(i==patients.size()-1 )
+		        	sublist.add(p2);
+		        samepriority = false;	
+		 					
+			   }
 		
+			
+			if(sublist.size()>1 && samepriority) 
+				Collections.sort(sublist,comparByDistance);
+		    if(sublist.size()>0) {
+		    	sortedA.addAll(sublist);
+		    	sublist = new LinkedList<Patient>();
+		    }
+		    
 			p1 = p2;
 		}
 		
@@ -169,35 +193,7 @@ public abstract class PreMedicalVisit {
 	}
 
 	
-/*	public List<Patient> sortByAddress(List<Patient> pts){
-		List<Patient> addressPat = new LinkedList<Patient>();
-		Patient p1;
-		Patient p2;
-		Patient patient=null;
-		int dis1=0,dis2=0;
-		for(int i=0;i<pts.size()-1;i++) {
-			p1 = pts.get(i);
-			for(int j=i+1;j<pts.size();j++) {
-				try {
-				p2 = pts.get(j);	
-				dis1 = Integer.valueOf(p1.getAddress().substring(p1.getAddress().indexOf("-"),p1.getAddress().length())).intValue();
-				dis2 = Integer.valueOf(p2.getAddress().substring(p2.getAddress().indexOf("-"),p2.getAddress().length())).intValue();
-				if(dis1<=dis2) {
-					patient = p1;
-				}else
-					patient = p2;
-				
-				}catch(Exception ex) {
-					ex.printStackTrace();
-				}
-				
-			}
-			if(patient!=null)
-		      addressPat.add(patient);
-		}
-		return addressPat;
-	}
-	*/
+
 	
 	
 	
