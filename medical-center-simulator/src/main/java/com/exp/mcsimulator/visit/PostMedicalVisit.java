@@ -24,7 +24,7 @@ public abstract class PostMedicalVisit {
 	 * Template method
 	 */
 
-	public void postVisit() {
+	public void postVisit() throws Exception {
 		medicalUnitStatus = MedicalUnitStatus.POSTVISIT_START;
 		
 		generateReport();

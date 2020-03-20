@@ -12,7 +12,8 @@ import com.exp.mcsimulator.Patient;
 import com.exp.mcsimulator.util.MedicalUnitStatus;
 
 public abstract class PreMedicalVisit {
-	private List<Patient> patientsRepository;
+	
+	private List<Patient> patientsRepository; 
 	private List<Patient> patients = new LinkedList<Patient>();
 	private List<Message> messages;
 	private MedicalUnitStatus medicalUnitStatus;
@@ -101,7 +102,7 @@ public abstract class PreMedicalVisit {
 	/**
 	 * Template method
 	 */
-	public void preVisit() {
+	public void preVisit() throws Exception {
 		medicalUnitStatus = MedicalUnitStatus.PREVISIT_START;
 		receiveMessages();
 		asignPriority();

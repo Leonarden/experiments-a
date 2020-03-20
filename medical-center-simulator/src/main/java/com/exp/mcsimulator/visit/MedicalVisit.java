@@ -13,12 +13,7 @@ import com.exp.mcsimulator.util.MedicalUnitStatus;
 
 public abstract class MedicalVisit {
 
-	static {
-	      System.setProperty("java.util.logging.config.file",
-	              "src/main/resources/loggin-bas.properties");
-	      //must initialize loggers after setting above property
-	   
-	  }
+
 	
 	private Patient patient;
 	Logger log = Logger.getLogger(this.getClass().getName());
@@ -29,7 +24,7 @@ public abstract class MedicalVisit {
 	/**
 	 * This is the class template method
 	 */
-	public void visit() {
+	public void visit() throws Exception {
 		medicalUnitStatus = MedicalUnitStatus.VISIT_START;
 		goToPlace();
 		int inspec = inspectPatient();
@@ -50,7 +45,7 @@ public abstract class MedicalVisit {
 	
 	public int inspectPatient() {
 		int action = 0;
-		Date d = new Date();
+		Date d = new Date(); //Every inspection creates a new action for the patient
 		Action a = new Action();
 		a.setPatientId(patient.getId());
 		
@@ -60,13 +55,13 @@ public abstract class MedicalVisit {
 		//we will simulate a random (0-3) action
 		log.log(Level.ALL,mes );
 		
-		//we also take into account the priority previously registered (there should exist correlation)
 		int pri = patient.getMessages().get(0).getPriority(); //
+		//we also take into account the priority of the message (there should exist a correlation)
+			
+		double stat = ((Math.random()*100)%3); //
 		
-		double stat = ((Math.random()*100)%3);
+		stat = (stat + pri)/2; //rnd and priority
 		
-		stat = (stat + pri)/2;
-		// to select index for a pathologies+ pathology
 		int k1;
 		
 		if(stat<1) {

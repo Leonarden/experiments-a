@@ -10,7 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.exp.mcsimulator.util.MedicalUnitStatus;
-
+/*
+ * Main class
+ * Manages runnable MedicalUnits
+ * 
+ * Generates random data for every MedicalUnit
+ * Launches all medicalUnit as a thread and returns its associated ThreadGroup
+ *
+ * 
+ * 
+ * 
+ */
 public class MedicalUnitCenter {
 	
 	List<MedicalUnit> medicalUnits;
@@ -37,43 +47,66 @@ public class MedicalUnitCenter {
 		configured = new LinkedList<Boolean>();
 		launched = new LinkedList<Boolean>();
 	}
-	
+	/**
+	 * Adds a Runnable MedicalUnit to list
+	 * @param unit
+	 * @return list's size
+	 */
 	public int addMedicalUnit(MedicalUnit unit) {
 		medicalUnits.add(unit);
 		return medicalUnits.size();
 	}
 
-   int configure(int pos) throws Exception {
+	/**
+	 * sets initial parameters to medical unit at position "pos" in the list
+	 * @param pos
+	 * @return
+	 * @throws Exception
+	 */
+   private int configure(int pos) throws Exception {
 		MedicalUnit medU = null;
 		try {
 		 medU = medicalUnits.get(pos);
-		if(medU == null) throw new Exception("Non existing Medical Unit to configure");
+		
+		 if(medU == null) throw new Exception("Non existing Medical Unit to configure");
+		//Initial medicalUnit status
 		medU.setMedicalUnitStatus(MedicalUnitStatus.UNIT_STOPPED);
+		
 		medU.setPatRepository(this.generatePatientRepository());
 		medU.setMessages(this.generateMessages());
 		medU.setTreatments(this.generateTreatments());
 		medU.setPathologies(this.generatePathologies());
+		
 		configured.add(pos,Boolean.TRUE);
 		launched.add(pos,Boolean.FALSE);
 		return 0;
+		
 		}catch(Exception ex) {
 			configured.add(pos,Boolean.FALSE);
-		log.log(Level.ALL,"Configure MedicalUnit at position: " +  pos + "failed");
+		    log.log(Level.SEVERE,"Configure MedicalUnit at position: " +  pos + "failed");
 			throw new Exception(ex.getMessage()+":::MedicalUnit:"+ medU+ "failed to configure");
 		}
 	
 	}
-	
+	/**
+	 * Set's initial parameters to all medicalUnits 
+	 * 
+	 * @throws Exception
+	 */
 	public void configureAll()throws Exception {
 		for(int i=0;i<medicalUnits.size();i++) {
 			configure(i);
 		}
 	}
 	
+	/**
+	 * Creates a thread from the runnable MedicalUnit at position "pos"
+	 * @return Thread created
+	 * 
+	 */
 	
-	
-	 Thread launch(int pos,ThreadGroup tg)  {
-	   int stat = -1; // -1 launch failed, 0<= lauch ok
+	 private Thread launch(int pos,ThreadGroup tg)  {
+	   
 		MedicalUnit medu = null;
 		Thread t = null;
 		try {
@@ -86,16 +119,20 @@ public class MedicalUnitCenter {
 		
 		t.start();
 		launched.add(Boolean.TRUE);
+		
 		}catch(Exception ex) {
 			launched.add(pos,Boolean.FALSE);
-			log.log(Level.ALL,"LAUNCH MedicalUnit at position: " +  pos + "failed");
-				//throw new Exception(ex.getMessage()+":::MedicalUnit:"+ medu+ "failed to configure");
+			log.log(Level.SEVERE,"LAUNCH MedicalUnit at position: " +  pos + "failed");
 			ex.printStackTrace();
 		}
 		
 		return t;
 	}
-
+	/**
+	 * launch of all runnable medicalUnits and return the ThreadGroup associated at all threads created
+	 * @param gname :ThreadGroup name
+	 * @return
+	 */
 	public ThreadGroup launchAll(String gname) {
 		//
 		
@@ -128,23 +165,26 @@ public class MedicalUnitCenter {
 
 public static void main(String[]args) {
 	
+	int stat = -1;
+
+	MedicalUnitCenter mucenter = new MedicalUnitCenter();
+	
 	
 	MedicalUnit medicalUnit1 = new MedicalUnit("C-XX-ALFA"); 
 	
 //	MedicalUnit medicalUnit2 = new MedicalUnit("C-XX-BETA"); 
 	
 	
-	MedicalUnitCenter muLauncher = new MedicalUnitCenter();
-	
 	ThreadGroup tg = null;
 	
+	
 	try {
-		muLauncher.addMedicalUnit(medicalUnit1);
+		mucenter.addMedicalUnit(medicalUnit1);
 		//muLauncher.addMedicalUnit(medicalUnit2);
-		muLauncher.configureAll();
-		tg =	muLauncher.launchAll("NUMOfMEDUNITS:1");
+		mucenter.configureAll();
+		tg =	mucenter.launchAll("NUMOfMEDUNITS:1");
 	
-	
+	stat = 0;
 	}catch(Exception ex) {
 		tg.stop();
 		ex.printStackTrace();
@@ -152,7 +192,7 @@ public static void main(String[]args) {
 	
 	
 	
-	
+	System.exit(stat);
 	
 }	
 	

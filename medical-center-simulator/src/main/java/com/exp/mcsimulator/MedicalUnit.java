@@ -17,7 +17,14 @@ import com.exp.mcsimulator.visit.PostMedicalVisit;
 import com.exp.mcsimulator.visit.PreMedicalVisit;
 import com.exp.mcsimulator.visit.ShortInfoPostMedicalVisit;
 import com.exp.mcsimulator.visit.SmallUltraFastMedicalVisit;
-
+/*
+ * It simulates a medicalUnit that has to perform medical visits
+ *  @see method run
+ *  
+ *  It adapts classes PreMedicalVisit, MedicalVisit, PostMedicalVisit
+ *  @see methods preVist(), visit(), postVisit()
+ * 
+ */
 public class MedicalUnit implements Runnable {
 private String id;
 private PreMedicalVisit preMedicalVisit;
@@ -49,7 +56,7 @@ public MedicalUnit(String id) {
 	
 }
 
-void preVisit() throws Exception {
+public void preVisit() throws Exception {
 		
 		//	if(messages.size()>2/3*MAXMESSAGES)
 		if(true)	
@@ -68,7 +75,7 @@ void preVisit() throws Exception {
 			
  }
 
- void visit() throws Exception {
+public void visit() throws Exception {
 	 
 	 //if(preMedicalVisit.getPatients().size()> MAXPATIENTS/2)
 		if(true)	
@@ -92,7 +99,10 @@ void preVisit() throws Exception {
 
 	 
  }
- 
+ /**
+  * 
+  * @throws Exception
+  */
  public void postVisit() throws Exception {
 //	 if(patients.size()> 2/3*MAXPATIENTS)  arbitrary criteria
 	if(true)	
@@ -106,7 +116,9 @@ void preVisit() throws Exception {
 		log.log(Level.ALL,"Post medical visit done with status: " + postMedicalVisit.getMedicalUnitStatus());
  
  }
- 
+/**
+ *  
+ */
 public void run() {
 
 	try {
