@@ -60,7 +60,7 @@ public abstract class MedicalVisit {
 			
 		double stat = ((Math.random()*100)%3); //
 		
-		stat = (stat + pri)/2; //rnd and priority
+		stat = (stat + pri)/2; 
 		
 		int k1;
 		

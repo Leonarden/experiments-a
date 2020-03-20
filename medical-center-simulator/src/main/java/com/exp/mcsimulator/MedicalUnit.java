@@ -36,9 +36,7 @@ List<Patient> patients;
 List<Message> messages;
 String[][] pathologies;
 Map<String,Treatment> treatments;
-private static int MAXPATIENTS = 150;
-private static int MAXMESSAGES = 100;
-private static int MAXDISTANCE = 50; //miles
+
  
 static {
     	System.setProperty("java.util.logging.config.file",
@@ -87,7 +85,7 @@ public void visit() throws Exception {
 		
 		medicalVisit.setTreatments(treatments);
 		medicalVisit.setPathologies(this.pathologies);
-		//The real list of patients onche filtered and scheduled
+		//The ordered by priority and distance list
 		patients = preMedicalVisit.getPatients();
 		for(Patient p:patients) {
 			medicalVisit.setPatient(p);

@@ -126,9 +126,13 @@ public abstract class PreMedicalVisit {
 				for(int j=0;j<keywords.length; j++) {
 				if(	m.getContent().contains(keywords[j]))
 				 m.setPriority(i);
-				log.log(Level.INFO," Message " + m.getContent()+ ",Priority: " + m.getPriority());
 				}		
 			}	
+			if(m.getPriority()<0) {
+				m.setPriority(emergencyKWords.length); //it is lastpriority +1
+				
+			}
+			log.log(Level.INFO," Message " + m.getContent()+ ",Priority: " + m.getPriority());
 		}
 	}
 
