@@ -101,7 +101,7 @@ public class MedicalUnitTest1 {
 	}
 
 	List<Message> generateMessages() {
-		String[] contents = {"It's an emergency I can't move I think I've got flu","I think I've got fever and stomach pain","I've fallen down and I'm bleeding","I don't feel well but I can stand up, I have anxiety"};
+		String[] contents = {"Sorry, I called the wrong number","This is a joke","It's an emergency I can't move I think I've got flu","I think I've got fever and stomach pain","I've fallen down and I'm bleeding","I don't feel well but I can stand up, I have anxiety"};
 		int r1=0,r2=0;
 		List<Message> messages = Collections.synchronizedList(new LinkedList<Message>());
 		Message m = null;

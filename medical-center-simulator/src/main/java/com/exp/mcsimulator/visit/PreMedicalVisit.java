@@ -181,11 +181,13 @@ public abstract class PreMedicalVisit {
 			if(sublist.size()>1 && samepriority) 
 				Collections.sort(sublist,comparByDistance);
 		    if(sublist.size()>0) {
-		    	sortedA.addAll(sublist);
-		    	sublist = new LinkedList<Patient>();
+		    	for(Patient p:sublist)
+		    		sortedA.add(p);
+		    	
 		    }
 		    
 			p1 = p2;
+			sublist = new LinkedList<Patient>();
 		}
 		
 		patients = sortedA;

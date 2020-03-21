@@ -20,7 +20,7 @@ public class SmallUltraFastMedicalVisit extends MedicalVisit {
 	double speed = 100;
 	double delta;
 	double sign;
-	int dist;
+	double dist;
 	int minutes = 0;
 
 	try {
@@ -32,17 +32,17 @@ public class SmallUltraFastMedicalVisit extends MedicalVisit {
 			
 		delta = (Math.random()%100)%20;
 		sign = (Math.random()%100)%2;
-		if(sign<1 && speed>minspeed+20)
+		if(sign<1 && speed>minspeed+10)
 			speed = speed - delta;
-		else if(speed<maxspeed-20)
+		else if(speed<maxspeed-10)
 			speed = speed + delta;
 	
-		minutes = minutes + 10;
+		minutes = minutes + 1;
 	
 		
-		dist = dist - (int)(10*speed)/60;
-		log.log(Level.ALL,"Driving at:" +speed + "Km/h for 10 min; Distance:"+dist);
-		
+		log.log(Level.ALL,"Driving at:" +speed + "Km/h for 1 min; Distance:"+dist);
+
+		dist = dist - (1*speed)/60;
 		long millis = (long) (1/speed * 100);
 		
 		Thread.sleep(millis);

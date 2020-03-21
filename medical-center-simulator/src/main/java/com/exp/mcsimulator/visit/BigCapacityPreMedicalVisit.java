@@ -14,6 +14,8 @@ import com.exp.mcsimulator.util.MedicalUnitStatus;
 
 public class BigCapacityPreMedicalVisit extends PreMedicalVisit {
 
+	String[] filteringT = {"Sorry, I called the wrong number","I'm joking"};
+	
 	@Override
 	public void receiveMessages() {
 		if(this.getMessages()==null || this.getMessages().size()==0) {
@@ -103,12 +105,14 @@ public class BigCapacityPreMedicalVisit extends PreMedicalVisit {
 			if(m.getPatientId()<0 || m.getPatientId()>=this.getPatientsRepository().size()) {
 				log.log(Level.ALL,"Invalid message " + m.getContent());
 				skip = true;
-			}else if(m.getContent().contains("I made a wrong call") || //add content restrictions
-					false ||
-					false ) {
+			}else { 
+				for(String ftoken:filteringT) {
+				if(m.getContent().contains(ftoken)){
 				
 						skip = true;
 						log.log(Level.ALL,"Message filtered by content: " +  m.getContent());
+			         }
+				}
 			}
 				
 			if(!skip) {

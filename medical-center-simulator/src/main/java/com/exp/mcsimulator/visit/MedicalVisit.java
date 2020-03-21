@@ -66,15 +66,15 @@ public abstract class MedicalVisit {
 		
 		if(stat<1) {
 			k1 = (int) (Math.random()*100)%pathologies[0].length;
-			mes = mes + " Critic, Pathology:" + pathologies[0][k1];
+			mes = mes + " Critic, Pathology: " + pathologies[0][k1];
 			action = 0;
 		}else if(stat>=1 && stat<2) {
 			k1 = (int) (Math.random()*100)%pathologies[1].length;
-			mes = mes + "Ill but not Critic, Pathology:" + pathologies[1][k1];
+			mes = mes + " Ill but not Critic, Pathology: " + pathologies[1][k1];
 			action = 1;
 		}else if(stat>=2 ) {
 			k1 = (int) (Math.random()*100)%pathologies[2].length;
-			mes = mes + " Not Critic and no fever, Pathology:" + pathologies[2][k1];
+			mes = mes + " Not Critic and no fever, Pathology: " + pathologies[2][k1];
 			action = 2;
 		}
 		

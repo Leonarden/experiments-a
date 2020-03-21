@@ -1,5 +1,6 @@
 package com.exp.mcsimulator.visit;
 
+import java.util.Iterator;
 import java.util.logging.Level;
 
 import com.exp.mcsimulator.Action;
@@ -23,12 +24,15 @@ public class ShortInfoPostMedicalVisit extends PostMedicalVisit {
 			log.log(Level.ALL,"Patient :" + i + " is null");
 			continue;
 		}
-		log.log(Level.ALL,i + ":  Patient name:" + p.getName() + " address: "+ p.getAddress());
-		log.log(Level.ALL,"Actions taken: ");	
-		for(int j=0;j<p.getActions().size();j++) {
-			a = p.getActions().iterator().next();
+		log.log(Level.ALL, i + ":  Patient name: " + p.getName() + " address: "+ p.getAddress());
+		log.log(Level.ALL,"Actions taken: ");
+		int j = 0;
+		Iterator<Action> iter = p.getActions().iterator(); 
+		while(iter.hasNext()) {
+			a = iter.next();
 			log.log(Level.ALL, j + ": Action Id:"+ a.getId() + " Description: " + a.getDescription());
-		}
+			j++;
+		 }
 		
 	}
 		
